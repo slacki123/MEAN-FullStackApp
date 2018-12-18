@@ -1,0 +1,30 @@
+{
+  "name": "wtf",
+  "version": "1.0.0",
+  "description": "mean",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slacki123/MEAN-FullStackTraining.git"
+  },
+  "keywords": [
+    "mean"
+  ],
+  "author": "Seb mean",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slacki123/MEAN-FullStackTraining/issues"
+  },
+  "homepage": "https://github.com/slacki123/MEAN-FullStackTraining#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
