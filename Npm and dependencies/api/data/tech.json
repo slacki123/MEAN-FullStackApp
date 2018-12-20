@@ -1,0 +1,25 @@
+[{
+	"_id": {
+		"$oid": "5c1a2498793e14991da9e8c1"
+	},
+	"name": "MongoDB",
+	"role": "Database",
+	"language": "JavaScript"
+},
+{
+	"_id": {
+		"$oid": "5c1a25e5793e14991da9e8c3"
+	},
+	"name": "AngularJS",
+	"role": "Front-end framework",
+	"language": "JavaScript"
+},
+{
+	"_id": {
+		"$oid": "5c1a25e5793e14991da9e8c4"
+	},
+	"name": "Node.js",
+	"role": "Platform",
+	"language": "JavaScript"
+}]
+
