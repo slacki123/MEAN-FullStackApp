@@ -120,3 +120,127 @@ module.exports.reviewsAddOne = function(req, res) {
 			}
 		});
 };
+
+module.exports.reviewsUpdateOne = function(req, res) {
+	var hotelId = req.params.hotelId;
+	var reviewId = req.params.reviewId;
+	console.log("GET reviewId " +reviewId + " for hotelIdd " + hotelId);
+
+	Hotel
+		.findById(hotelId)
+		.select("reviews")
+		.exec( 
+		function(err, hotel) {
+			var thisReview;
+			var response = {
+				status : 200,
+				message : hotel
+			};
+			if (err){
+				console.log("Error in finding hotel")	
+				response.status = 500;
+				response.message = err;
+			}
+			else if (!hotel) {
+				response.status = 404;
+				response.message = {
+					"message" : "Hotel ID not found " + hotelId
+				};
+			} else {
+		    // Get the review
+	        thisReview = hotel.reviews.id(reviewId); //id(reviewId) finds the json object of the review with this id
+	        console.log("This review is found and is: " + thisReview)
+	        // If the review doesn't exist Mongoose returns null
+		        if (!thisReview) {
+		        	response.status = 404;
+		        	response.message = {
+		            	"message" : "Review ID not found " + reviewId
+		            };
+				}
+
+				if (response.status !==200){
+					res
+						.status(response.status)
+						.json(response.message)	
+				} else {
+
+					thisReview.name = req.body.name;
+					thisReview.rating = parseInt(req.body.rating, 10);
+					thisReview.review = req.body.review;
+
+					hotel.save(function(err, reviewUpdated) {
+						if (err) {
+							res
+								.status(500)
+								.json(err)
+						} else {
+							res
+								.status(201)
+								.json(thisReview); //reviewUpdated are the JSON entries that you put in to update
+						}
+					});
+				}
+			}
+		});
+}
+
+module.exports.reviewsDeleteOne = function(req, res) {
+	var hotelId = req.params.hotelId;
+	var reviewId = req.params.reviewId;
+	console.log("GET reviewId " +reviewId + " for hotelIdd " + hotelId);
+
+	Hotel
+		.findById(hotelId)
+		.select("reviews")
+		.exec( 
+		function(err, hotel) {
+			var thisReview;
+			var response = {
+				status : 200,
+				message : hotel
+			};
+			if (err){
+				console.log("Error in finding hotel")	
+				response.status = 500;
+				response.message = err;
+			}
+			else if (!hotel) {
+				response.status = 404;
+				response.message = {
+					"message" : "Hotel ID not found " + hotelId
+				};
+			} else {
+		    // Get the review
+	        thisReview = hotel.reviews.id(reviewId); //id(reviewId) finds the json object of the review with this id
+	        console.log("This review is found and is: " + thisReview)
+	        // If the review doesn't exist Mongoose returns null
+		        if (!thisReview) {
+		        	response.status = 404;
+		        	response.message = {
+		            	"message" : "Review ID not found " + reviewId
+		            };
+				}
+
+				if (response.status !==200){
+					res
+						.status(response.status)
+						.json(response.message)	
+				} else {
+
+					hotel.reviews.id(reviewId).remove();
+
+					hotel.save(function(err, reviewUpdated) {
+						if (err) {
+							res
+								.status(500)
+								.json(err)
+						} else {
+							res
+								.status(201)
+								.json({"message" : "Review Deleted"}); //reviewUpdated are the JSON entries that you put in to update
+						}
+					});
+				}
+			}
+		});
+}
